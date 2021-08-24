@@ -12,13 +12,23 @@ class App extends Component {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
-    name: "",
-    number: "",
   }
 
   addContact = (contact) => {
+    const { contacts } = this.state
+    if (contacts.find((item) => item.name === contact.name)) {
+      alert(`${contact.name} is already in contacts`)
+      return false
+    }
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
+    }))
+    return true
+  }
+
+  deleteContact = (id) => {
+    this.setState((prev) => ({
+      contacts: prev.contacts.filter((contact) => contact.id !== id),
     }))
   }
 
@@ -33,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const { filter, contacts } = this.state
+    const { filter } = this.state
     return (
       <>
         <h1>Phonebook</h1>
@@ -41,7 +51,7 @@ class App extends Component {
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.handleChange} />
-        <ContactsList contacts={this.filterContact()} />
+        <ContactsList contacts={this.filterContact()} remove={this.deleteContact} />
       </>
     )
   }

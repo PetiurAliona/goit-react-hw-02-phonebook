@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { v4 as uuidv4 } from "uuid"
 import PropTypes from "prop-types"
+import styled from "./ContactForm.module.css"
 
 class ContactForm extends Component {
   state = {
@@ -22,18 +23,18 @@ class ContactForm extends Component {
       id: uuidv4(),
     })
 
-    // if (isSuccess) {
-    this.setState({
-      name: "",
-      number: "",
-    })
-    // }
+    if (isSuccess) {
+      this.setState({
+        name: "",
+        number: "",
+      })
+    }
   }
 
   render() {
     const { name, number } = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={styled.contactForm} onSubmit={this.handleSubmit}>
         <label>
           Name
           <input
@@ -44,6 +45,7 @@ class ContactForm extends Component {
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
             onChange={this.handleChange}
+            className={styled.input}
           />
         </label>
         <label>
@@ -56,9 +58,12 @@ class ContactForm extends Component {
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
             onChange={this.handleChange}
+            className={styled.input}
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button type="submit" className={styled.button}>
+          Add contact
+        </button>
       </form>
     )
   }
